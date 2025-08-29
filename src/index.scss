@@ -19,4 +19,17 @@
     font-size: 14px;
     color: #333;
   }
+
+  // Alignment modifiers
+  &--left {
+    text-align: left;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--right {
+    text-align: right;
+  }
 }

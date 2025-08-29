@@ -68,6 +68,36 @@ export default class cardStatistics implements BlockTool {
   private descriptionPlaceholder: string;
 
   /**
+   * Available alignments
+   */
+  private aligns = [
+    {
+      name: 'left',
+      title: 'Align left',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="#000000" fill-rule="nonzero" d="M85.282 500.778c3.357 3.32 7.207 5.222 11.997 5.222H542.72c4.79 0 8.64-1.903 11.997-5.222 3.357-3.32 5.282-7.125 5.282-11.861v-33.702c0-4.736-1.925-8.541-5.282-11.86-3.357-3.32-7.207-5.223-11.997-5.223H97.28c-4.79 0-8.64 1.903-11.997 5.222-3.357 3.32-5.282 7.125-5.282 11.861v33.702c0 4.736 1.925 8.541 5.282 11.86Zm0-101.549c3.357 3.32 7.207 5.222 11.997 5.222h342.71c4.812 0 8.64-1.902 11.997-5.222 3.357-3.32 5.282-7.125 5.282-11.86v-33.702c0-4.757-1.925-8.542-5.282-11.861-3.357-3.32-7.185-5.223-11.997-5.223H97.28c-4.79 0-8.64 1.903-11.997 5.223-3.357 3.319-5.282 7.104-5.282 11.86v33.702c0 4.736 1.925 8.542 5.282 11.861Zm0-102.035c3.357 3.32 7.207 5.223 11.997 5.223h411.355c4.79 0 8.64-1.903 11.997-5.223 3.357-3.319 5.282-7.125 5.282-11.86v-33.702c0-4.736-1.925-8.542-5.282-11.861-3.358-3.32-7.207-5.222-11.997-5.222H97.28c-4.79 0-8.64 1.902-11.997 5.222-3.357 3.32-5.282 7.125-5.282 11.86v33.702c0 4.736 1.925 8.542 5.282 11.861Zm0-101.57c3.357 3.341 7.207 5.223 11.997 5.223h308.645c4.32 0 8.639-1.882 11.996-5.222 3.358-3.32 4.79-7.104 4.79-11.861v-33.68c0-4.758-1.432-8.542-4.79-11.862-3.357-3.34-7.677-5.222-11.996-5.222H97.279c-4.79 0-8.64 1.882-11.997 5.222-3.357 3.32-5.282 7.104-5.282 11.861v33.68c0 4.758 1.925 8.542 5.282 11.862Z"/></svg>`
+    },
+    {
+      name: 'center',
+      title: 'Align center',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="#000000" fill-rule="nonzero" d="M554.718 138.222c-3.357-3.32-7.207-5.222-11.997-5.222H97.28c-4.79 0-8.64 1.903-11.997 5.222-3.357 3.32-5.282 7.125-5.282 11.861v33.702c0 4.736 1.925 8.542 5.282 11.86 3.357 3.32 7.207 5.223 11.997 5.223H542.72c4.79 0 8.64-1.903 11.997-5.222 3.357-3.32 5.282-7.125 5.282-11.861v-33.702c0-4.736-1.925-8.541-5.282-11.86Zm-51 101c-3.357-3.32-7.207-5.222-11.997-5.222h-342.71c-4.812 0-8.64 1.903-11.997 5.222-3.357 3.32-5.282 7.125-5.282 11.861v33.702c0 4.757 1.925 8.542 5.282 11.86 3.357 3.32 7.185 5.223 11.997 5.223h342.71c4.79 0 8.64-1.903 11.997-5.222 3.357-3.32 5.282-7.104 5.282-11.861v-33.702c0-4.736-1.925-8.541-5.282-11.86ZM525.721 336H114.366c-4.79 0-8.64 1.903-11.997 5.222-3.357 3.32-5.282 7.125-5.282 11.861v33.702c0 4.736 1.925 8.542 5.282 11.86 3.358 3.32 7.207 5.223 11.997 5.223H525.72c4.79 0 8.64-1.903 11.997-5.222 3.357-3.32 5.282-7.125 5.282-11.861v-33.702c0-4.736-1.925-8.541-5.282-11.86-3.357-3.32-7.207-5.223-11.997-5.223Zm-52 102.021H165.076c-4.32 0-8.639 1.882-11.996 5.222-3.358 3.32-4.79 7.104-4.79 11.862v33.68c0 4.757 1.432 8.542 4.79 11.86 3.357 3.341 7.677 5.223 11.996 5.223h308.645c4.79 0 8.64-1.882 11.997-5.222 3.357-3.32 5.282-7.104 5.282-11.861v-33.68c0-4.758-1.925-8.542-5.282-11.862-3.357-3.34-7.207-5.222-11.997-5.222Z"/></svg>`
+    },
+    {
+      name: 'right',
+      title: 'Align right',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="#000000" fill-rule="nonzero" d="M554.718 138.222c-3.357-3.32-7.207-5.222-11.997-5.222H97.28c-4.79 0-8.64 1.903-11.997 5.222-3.357 3.32-5.282 7.125-5.282 11.861v33.702c0 4.736 1.925 8.541 5.282 11.86 3.357 3.32 7.207 5.223 11.997 5.223H542.72c4.79 0 8.64-1.903 11.997-5.222 3.357-3.32 5.282-7.125 5.282-11.861v-33.702c0-4.736-1.925-8.541-5.282-11.86Zm0 101.549c-3.357-3.32-7.207-5.222-11.997-5.222h-342.71c-4.812 0-8.64 1.902-11.997 5.222-3.357 3.32-5.282 7.125-5.282 11.86v33.702c0 4.757 1.925 8.542 5.282 11.861 3.357 3.32 7.185 5.223 11.997 5.223h342.71c4.79 0 8.64-1.903 11.997-5.223 3.357-3.319 5.282-7.104 5.282-11.86v-33.702c0-4.736-1.925-8.542-5.282-11.861Zm0 102.035c-3.357-3.32-7.207-5.223-11.997-5.223H131.366c-4.79 0-8.64 1.903-11.997 5.223-3.357 3.319-5.282 7.125-5.282 11.86v33.702c0 4.736 1.925 8.542 5.282 11.861 3.358 3.32 7.207 5.222 11.997 5.222H542.72c4.79 0 8.64-1.902 11.997-5.222 3.357-3.32 5.282-7.125 5.282-11.86v-33.702c0-4.736-1.925-8.542-5.282-11.861Zm0 101.57c-3.357-3.341-7.207-5.223-11.997-5.223H234.076c-4.32 0-8.639 1.882-11.996 5.222-3.358 3.32-4.79 7.104-4.79 11.861v33.68c0 4.758 1.432 8.542 4.79 11.862 3.357 3.34 7.677 5.222 11.996 5.222h308.645c4.79 0 8.64-1.882 11.997-5.222 3.357-3.32 5.282-7.104 5.282-11.861v-33.68c0-4.758-1.925-8.542-5.282-11.862Z"/></svg>`
+    }
+  ];
+
+  /**
+   * Default alignment type
+   * @public
+   * @returns {string}
+   */
+  static get DEFAULT_ALIGN_TYPE() {
+    return 'left';
+  }
+
+  /**
    * Class constructor
    * 
    * @link https://editorjs.io/tools-api#class-constructor
@@ -107,6 +137,7 @@ export default class cardStatistics implements BlockTool {
       value: 'cdx-card-statistics__value',
       title: 'cdx-card-statistics__title',
       description: 'cdx-card-statistics__description',
+      wrapperForAlignType: (alignType: string) => `cdx-card-statistics--${alignType}`,
     };
   }
 
@@ -119,6 +150,7 @@ export default class cardStatistics implements BlockTool {
       value: this.api.sanitizer.clean(data.value || "", cardStatistics.sanitize),
       title: this.api.sanitizer.clean(data.title || "", cardStatistics.sanitize),
       description: this.api.sanitizer.clean(data.description || "", cardStatistics.sanitize),
+      align: this.api.sanitizer.clean(data.align || cardStatistics.DEFAULT_ALIGN_TYPE, cardStatistics.sanitize),
     });
   }
 
@@ -173,6 +205,9 @@ export default class cardStatistics implements BlockTool {
 
     this.nodes.wrapper.appendChild(this.nodes.description);
 
+    // Apply alignment
+    this.updateAlign(this._data.align || cardStatistics.DEFAULT_ALIGN_TYPE);
+
     return this.nodes.wrapper;
   }
 
@@ -188,6 +223,7 @@ export default class cardStatistics implements BlockTool {
       value: this.nodes.value?.innerHTML || '',
       title: this.nodes.title?.innerHTML || '',
       description: this.nodes.description?.innerHTML || '',
+      align: this._data.align,
     };
   }
 
@@ -210,7 +246,20 @@ export default class cardStatistics implements BlockTool {
    * 
    * @returns {HTMLElement}
    */ 
-  // renderSettings() {}
+  renderSettings() {
+    const alignTypes = this.aligns.map((align) => ({
+      icon: align.icon,
+      name: `align-${align.name}`,
+      label: align.title,
+      toggle: 'align',
+      isActive: this._data.align === align.name,
+      onActivate: () => {
+        this.updateAlign(align.name);
+      },
+    }));
+
+    return alignTypes;
+  }
 
   /**
    * Clear Tools stuff: cache, variables, events.
@@ -285,6 +334,7 @@ export default class cardStatistics implements BlockTool {
       description: {  // Allow line breaks only
         br: true,     // Allow <br> tags for line breaks
       },
+      align: false, // Remove all HTML tags from align
     };
   } 
 
@@ -391,6 +441,23 @@ export default class cardStatistics implements BlockTool {
   /**
    * HELPER METHODS
    */
+
+  /**
+   * Update Align
+   * 
+   * @param {string} currentAlign 
+   */
+  updateAlign(currentAlign: string) {
+    if (this._data.align === currentAlign && this.nodes.wrapper?.classList.contains(this.classes.wrapperForAlignType(currentAlign))) {
+      return;
+    }
+
+    this._data.align = currentAlign;
+
+    this.aligns.forEach(align => {
+      this.nodes.wrapper?.classList.toggle(this.classes.wrapperForAlignType(align.name), this._data.align === align.name);
+    });
+  }
 
   /**
    * Helper for creating DOM elements

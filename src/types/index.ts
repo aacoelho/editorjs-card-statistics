@@ -7,6 +7,7 @@ export interface cardStatisticsData extends BlockToolData {
   value?: string;
   title?: string;
   description?: string;
+  align?: string;
 }
 
 /**
