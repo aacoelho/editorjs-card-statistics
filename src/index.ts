@@ -40,7 +40,7 @@ export default class cardStatistics implements BlockTool {
   /**
    * Tool data for input and output
    */
-  private data: cardStatisticsData;
+  private _data!: cardStatisticsData;
 
   /**
    * Configuration object that passed through the initial Editor configuration.
@@ -73,20 +73,17 @@ export default class cardStatistics implements BlockTool {
    * @link https://editorjs.io/tools-api#class-constructor
    */
   constructor({ data, config, api, block, readOnly }: { data: cardStatisticsData, config: cardStatisticsConfig, api: API, block: BlockAPI, readOnly: boolean }) {
-    this.data = {
-      value: data.value || '',
-      title: data.title || '',
-      description: data.description || '',
-    };
+    this.config = config;
+    this.api = api;
+    this.block = block;
+    this.readOnly = readOnly;
 
     this.valuePlaceholder = config.valuePlaceholder || 'Add statistics value';
     this.titlePlaceholder = config.titlePlaceholder || 'Add title';
     this.descriptionPlaceholder = config.descriptionPlaceholder || 'Add description';
 
-    this.config = config;
-    this.api = api;
-    this.block = block;
-    this.readOnly = readOnly;
+    // Use data setter to automatically sanitize
+    this.data = data;
 
     /**
      * Declare Tool's nodes
@@ -97,6 +94,40 @@ export default class cardStatistics implements BlockTool {
       title: null,
       description: null,
     };
+  }
+
+  /**
+   * Class names
+   *
+   * @returns {Object}
+   */
+  get classes() {
+    return {
+      wrapper: 'cdx-card-statistics',
+      value: 'cdx-card-statistics__value',
+      title: 'cdx-card-statistics__title',
+      description: 'cdx-card-statistics__description',
+    };
+  }
+
+  /**
+   * Data setter with automatic sanitization
+   * @param {cardStatisticsData} data - Raw data to sanitize and store
+   */
+  set data(data: cardStatisticsData) {
+    this._data = Object.assign({}, {
+      value: this.api.sanitizer.clean(data.value || "", cardStatistics.sanitize),
+      title: this.api.sanitizer.clean(data.title || "", cardStatistics.sanitize),
+      description: this.api.sanitizer.clean(data.description || "", cardStatistics.sanitize),
+    });
+  }
+
+  /**
+   * Data getter
+   * @returns {cardStatisticsData} Current tool data
+   */
+  get data(): cardStatisticsData {
+    return this._data;
   }
 
   /**
@@ -113,32 +144,31 @@ export default class cardStatistics implements BlockTool {
    * @returns {HTMLElement}
    */
   render() {
-    this.nodes.wrapper = document.createElement('div');
-    this.nodes.wrapper.classList.add('cdx-card-statistics');
+    this.nodes.wrapper = this.make('div', this.classes.wrapper);
 
     // Value input
-    this.nodes.value = document.createElement('div');
-    this.nodes.value.className = 'cdx-card-statistics__value';
-    this.nodes.value.contentEditable = !this.readOnly ? 'true' : 'false';
-    this.nodes.value.innerHTML = this.data.value || '';
+    this.nodes.value = this.make('div', this.classes.value, {
+      contentEditable: !this.readOnly ? 'true' : 'false',
+      innerHTML: this._data.value || '',
+    });
     this.nodes.value.dataset.placeholder = this.valuePlaceholder;
 
     this.nodes.wrapper.appendChild(this.nodes.value);
 
     // Title input
-    this.nodes.title = document.createElement('div');
-    this.nodes.title.className = 'cdx-card-statistics__title';
-    this.nodes.title.contentEditable = !this.readOnly ? 'true' : 'false';
-    this.nodes.title.innerHTML = this.data.title || '';
+    this.nodes.title = this.make('div', this.classes.title, {
+      contentEditable: !this.readOnly ? 'true' : 'false',
+      innerHTML: this._data.title || '',
+    });
     this.nodes.title.dataset.placeholder = this.titlePlaceholder;
 
     this.nodes.wrapper.appendChild(this.nodes.title);
 
     // Description input
-    this.nodes.description = document.createElement('div');
-    this.nodes.description.className = 'cdx-card-statistics__description';
-    this.nodes.description.contentEditable = !this.readOnly ? 'true' : 'false';
-    this.nodes.description.innerHTML = this.data.description || '';
+    this.nodes.description = this.make('div', this.classes.description, {
+      contentEditable: !this.readOnly ? 'true' : 'false',
+      innerHTML: this._data.description || '',
+    });
     this.nodes.description.dataset.placeholder = this.descriptionPlaceholder;
 
     this.nodes.wrapper.appendChild(this.nodes.description);
@@ -168,7 +198,10 @@ export default class cardStatistics implements BlockTool {
    * @param {cardStatisticsData} savedData
    * @returns {boolean} true if data is valid, otherwise false
    */ 
-  // validate() {}
+  validate(savedData: cardStatisticsData): boolean {
+    // Require at least a value or title to be present
+    return !!(savedData.value?.trim() || savedData.title?.trim());
+  }
 
   /**
    * 
@@ -245,9 +278,15 @@ export default class cardStatistics implements BlockTool {
    * 
    * @returns {{[string]: boolean|object}} - Sanitizer rules
    */
-  // static get sanitize() {
-  //   return {};
-  // } 
+  static get sanitize() {
+    return {
+      value: false, // Remove all HTML tags
+      title: false, // Remove all HTML tags  
+      description: {  // Allow line breaks only
+        br: true,     // Allow <br> tags for line breaks
+      },
+    };
+  } 
 
   /**
    * Describe an icon and title here
@@ -258,7 +297,7 @@ export default class cardStatistics implements BlockTool {
    */
   static get toolbox() {
     return {
-      title: 'card-statistics',
+      title: 'Statistics card',
       icon: IconStar,
     };
   }
@@ -306,9 +345,9 @@ export default class cardStatistics implements BlockTool {
    * 
    * @returns {boolean}
    */ 
-  // static get enableLineBreaks() {
-  //   return true;
-  // }
+  static get enableLineBreaks() {
+    return true;
+  }
 
   /**
    * This flag tells core that current tool supports the read-only mode
@@ -316,9 +355,9 @@ export default class cardStatistics implements BlockTool {
    * 
    * @returns {boolean}
    */
-  // static get isReadOnlySupported() {
-  //   return true;
-  // } 
+  static get isReadOnlySupported() {
+    return true;
+  } 
 
   /**
    * LIFE CYCLE HOOKS
@@ -348,4 +387,31 @@ export default class cardStatistics implements BlockTool {
    * @param {MoveEvent} event 
    */
   // moved(event) {}
+
+  /**
+   * HELPER METHODS
+   */
+
+  /**
+   * Helper for creating DOM elements
+   * @param {string} tagName - Element tag name
+   * @param {string|string[]} classNames - Class names to add
+   * @param {object} attributes - Attributes to set
+   * @returns {HTMLElement}
+   */
+  private make(tagName: string, classNames: string | string[] = [], attributes: Record<string, any> = {}): HTMLElement {
+    const el = document.createElement(tagName);
+
+    if (Array.isArray(classNames)) {
+      el.classList.add(...classNames);
+    } else if (classNames) {
+      el.classList.add(classNames);
+    }
+
+    for (const attrName in attributes) {
+      (el as any)[attrName] = attributes[attrName];
+    }
+
+    return el;
+  }
 };
