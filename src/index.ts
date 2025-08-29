@@ -4,11 +4,6 @@
 import './index.scss';
 
 /**
- * Import icons
- */
-import { IconStar } from '@codexteam/icons';
-
-/**
  * Import types
  */
 import { cardStatisticsData, cardStatisticsConfig } from './types';
@@ -348,7 +343,7 @@ export default class cardStatistics implements BlockTool {
   static get toolbox() {
     return {
       title: 'Statistics card',
-      icon: IconStar,
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM140,80v96a8,8,0,0,1-16,0V95l-11.56,7.71a8,8,0,1,1-8.88-13.32l24-16A8,8,0,0,1,140,80Z"></path></svg>',
     };
   }
 
