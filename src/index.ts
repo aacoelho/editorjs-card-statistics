@@ -1,7 +1,7 @@
 /**
- * Import styles library
+ * Import styles
  */
-import styles from './index.module.css';
+import './index.scss';
 
 /**
  * Import icons
@@ -53,12 +53,36 @@ export default class cardStatistics implements BlockTool {
   private nodes: {[key: string]: HTMLElement|null};
 
   /**
+   * Value input placeholder
+   */
+  private valuePlaceholder: string;
+
+  /**
+   * Title input placeholder
+   */
+  private titlePlaceholder: string;
+
+  /**
+   * Description input placeholder
+   */
+  private descriptionPlaceholder: string;
+
+  /**
    * Class constructor
    * 
    * @link https://editorjs.io/tools-api#class-constructor
    */
   constructor({ data, config, api, block, readOnly }: { data: cardStatisticsData, config: cardStatisticsConfig, api: API, block: BlockAPI, readOnly: boolean }) {
-    this.data = data;
+    this.data = {
+      value: data.value || '',
+      title: data.title || '',
+      description: data.description || '',
+    };
+
+    this.valuePlaceholder = config.valuePlaceholder || 'Add statistics value';
+    this.titlePlaceholder = config.titlePlaceholder || 'Add title';
+    this.descriptionPlaceholder = config.descriptionPlaceholder || 'Add description';
+
     this.config = config;
     this.api = api;
     this.block = block;
@@ -69,6 +93,9 @@ export default class cardStatistics implements BlockTool {
      */
     this.nodes = {
       wrapper: null,
+      value: null,
+      title: null,
+      description: null,
     };
   }
 
@@ -87,7 +114,34 @@ export default class cardStatistics implements BlockTool {
    */
   render() {
     this.nodes.wrapper = document.createElement('div');
-    this.nodes.wrapper.classList.add(styles['card-statistics-tool']);
+    this.nodes.wrapper.classList.add('cdx-card-statistics');
+
+    // Value input
+    this.nodes.value = document.createElement('div');
+    this.nodes.value.className = 'cdx-card-statistics__value';
+    this.nodes.value.contentEditable = !this.readOnly ? 'true' : 'false';
+    this.nodes.value.innerHTML = this.data.value || '';
+    this.nodes.value.dataset.placeholder = this.valuePlaceholder;
+
+    this.nodes.wrapper.appendChild(this.nodes.value);
+
+    // Title input
+    this.nodes.title = document.createElement('div');
+    this.nodes.title.className = 'cdx-card-statistics__title';
+    this.nodes.title.contentEditable = !this.readOnly ? 'true' : 'false';
+    this.nodes.title.innerHTML = this.data.title || '';
+    this.nodes.title.dataset.placeholder = this.titlePlaceholder;
+
+    this.nodes.wrapper.appendChild(this.nodes.title);
+
+    // Description input
+    this.nodes.description = document.createElement('div');
+    this.nodes.description.className = 'cdx-card-statistics__description';
+    this.nodes.description.contentEditable = !this.readOnly ? 'true' : 'false';
+    this.nodes.description.innerHTML = this.data.description || '';
+    this.nodes.description.dataset.placeholder = this.descriptionPlaceholder;
+
+    this.nodes.wrapper.appendChild(this.nodes.description);
 
     return this.nodes.wrapper;
   }
@@ -100,7 +154,11 @@ export default class cardStatistics implements BlockTool {
    * @returns {cardStatisticsData} saved data
    */
   save(): cardStatisticsData {
-    return {};
+    return {
+      value: this.nodes.value?.innerHTML || '',
+      title: this.nodes.title?.innerHTML || '',
+      description: this.nodes.description?.innerHTML || '',
+    };
   }
 
   /**
