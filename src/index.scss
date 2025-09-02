@@ -1,0 +1,38 @@
+.cdx-card-statistics {
+  margin: 1em auto;
+  background-color: #f8f8f8;
+  color: black;
+  border-radius: 8px;
+  padding: 20px;
+
+  &__value {
+    font-size: 54px;
+    margin-bottom: 10px;
+    outline: none !important;
+  }
+
+  &__title {
+    font-size: 18px;
+    margin-bottom: 20px;
+    outline: none !important;
+  }
+
+  &__description {
+    font-size: 14px;
+    color: #333;
+    outline: none !important;
+  }
+
+  // Alignment modifiers
+  &--left {
+    text-align: left;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--right {
+    text-align: right;
+  }
+}
