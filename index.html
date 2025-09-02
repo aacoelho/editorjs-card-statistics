@@ -22,7 +22,7 @@
       tools: {
         cardStatistics: {
           class: cardStatistics,
-          // inlineToolbar: ['marker', 'link'],
+          inlineToolbar: ['bold','italic'],
           // shortcut: 'CMD+SHIFT+H',
           // config: {},
         }
@@ -32,7 +32,12 @@
         blocks: [
           {
             type: 'cardStatistics',
-            data: {},
+            data: {
+                value: "<b>100%</b>",
+                title: "Probability of being right",
+                description: "Being right is a good thing",
+                align: "left"
+            }
           }
         ],
       },

@@ -137,15 +137,15 @@ export default class cardStatistics implements BlockTool {
   }
 
   /**
-   * Data setter with automatic sanitization
-   * @param {cardStatisticsData} data - Raw data to sanitize and store
+   * Data setter
+   * @param {cardStatisticsData} data - Raw data to store (Editor.js handles sanitization automatically)
    */
   set data(data: cardStatisticsData) {
     this._data = Object.assign({}, {
-      value: this.api.sanitizer.clean(data.value || "", cardStatistics.sanitize),
-      title: this.api.sanitizer.clean(data.title || "", cardStatistics.sanitize),
-      description: this.api.sanitizer.clean(data.description || "", cardStatistics.sanitize),
-      align: this.api.sanitizer.clean(data.align || cardStatistics.DEFAULT_ALIGN_TYPE, cardStatistics.sanitize),
+      value: data.value || "",
+      title: data.title || "",
+      description: data.description || "",
+      align: data.align || cardStatistics.DEFAULT_ALIGN_TYPE,
     });
   }
 
@@ -324,12 +324,10 @@ export default class cardStatistics implements BlockTool {
    */
   static get sanitize() {
     return {
-      value: false, // Remove all HTML tags
-      title: false, // Remove all HTML tags  
-      description: {  // Allow line breaks only
-        br: true,     // Allow <br> tags for line breaks
-      },
-      align: false, // Remove all HTML tags from align
+      value: true,     // Keep numbers as plain text
+      title: true,      // Allow all inline formatting in titles
+      description: true, // Allow all inline formatting in descriptions
+      align: false,     // Keep alignment as plain text
     };
   } 
 
