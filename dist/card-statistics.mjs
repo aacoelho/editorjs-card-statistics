@@ -1,8 +1,8 @@
 (function(){"use strict";try{if(typeof document!="undefined"){var t=document.createElement("style");t.appendChild(document.createTextNode(".cdx-card-statistics{margin:1em auto;background-color:#f8f8f8;color:#000;border-radius:8px;padding:20px}.cdx-card-statistics__value{font-size:54px;margin-bottom:10px;outline:none!important}.cdx-card-statistics__title{font-size:18px;margin-bottom:20px;outline:none!important}.cdx-card-statistics__description{font-size:14px;color:#333;outline:none!important}.cdx-card-statistics--left{text-align:left}.cdx-card-statistics--center{text-align:center}.cdx-card-statistics--right{text-align:right}")),document.head.appendChild(t)}}catch(e){console.error("vite-plugin-css-injected-by-js",e)}})();
-var r = Object.defineProperty;
-var d = (l, e, t) => e in l ? r(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
+var c = Object.defineProperty;
+var d = (l, e, t) => e in l ? c(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
 var s = (l, e, t) => (d(l, typeof e != "symbol" ? e + "" : e, t), t);
-class c {
+class r {
   constructor({ data: e, config: t, api: i, block: a, readOnly: n }) {
     s(this, "api");
     s(this, "block");
@@ -54,7 +54,7 @@ class c {
       value: e.value || "",
       title: e.title || "",
       description: e.description || "",
-      align: e.align || c.DEFAULT_ALIGN_TYPE
+      align: e.align || r.DEFAULT_ALIGN_TYPE
     });
   }
   get data() {
@@ -70,14 +70,14 @@ class c {
     }), this.nodes.title.dataset.placeholder = this.titlePlaceholder, this.nodes.wrapper.appendChild(this.nodes.title), this.nodes.description = this.make("div", this.classes.description, {
       contentEditable: this.readOnly ? "false" : "true",
       innerHTML: this._data.description || ""
-    }), this.nodes.description.dataset.placeholder = this.descriptionPlaceholder, this.nodes.wrapper.appendChild(this.nodes.description), this.updateAlign(this._data.align || c.DEFAULT_ALIGN_TYPE), this.nodes.wrapper;
+    }), this.nodes.description.dataset.placeholder = this.descriptionPlaceholder, this.nodes.wrapper.appendChild(this.nodes.description), this.updateAlign(this._data.align || r.DEFAULT_ALIGN_TYPE), this.nodes.wrapper;
   }
   save() {
     var e, t, i;
     return {
-      value: ((e = this.nodes.value) == null ? void 0 : e.innerHTML) || "",
-      title: ((t = this.nodes.title) == null ? void 0 : t.innerHTML) || "",
-      description: ((i = this.nodes.description) == null ? void 0 : i.innerHTML) || "",
+      value: this.getCleanContent(((e = this.nodes.value) == null ? void 0 : e.innerHTML) || ""),
+      title: this.getCleanContent(((t = this.nodes.title) == null ? void 0 : t.innerHTML) || ""),
+      description: this.getCleanContent(((i = this.nodes.description) == null ? void 0 : i.innerHTML) || ""),
       align: this._data.align
     };
   }
@@ -117,6 +117,9 @@ class c {
   static get isReadOnlySupported() {
     return !0;
   }
+  getCleanContent(e) {
+    return e ? e.replace(/^<br\/?>$/i, "").replace(/^<p><br\/?>?<\/p>$/i, "").replace(/^<div><br\/?>?<\/div>$/i, "").replace(/^\s*$/, "") : "";
+  }
   updateAlign(e) {
     var t;
     this._data.align === e && ((t = this.nodes.wrapper) == null ? void 0 : t.classList.contains(this.classes.wrapperForAlignType(e))) || (this._data.align = e, this.aligns.forEach((i) => {
@@ -133,5 +136,5 @@ class c {
   }
 }
 export {
-  c as default
+  r as default
 };
