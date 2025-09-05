@@ -215,9 +215,9 @@ export default class cardStatistics implements BlockTool {
    */
   save(): cardStatisticsData {
     return {
-      value: this.nodes.value?.innerHTML || '',
-      title: this.nodes.title?.innerHTML || '',
-      description: this.nodes.description?.innerHTML || '',
+      value: this.getCleanContent(this.nodes.value?.innerHTML || ''),
+      title: this.getCleanContent(this.nodes.title?.innerHTML || ''),
+      description: this.getCleanContent(this.nodes.description?.innerHTML || ''),
       align: this._data.align,
     };
   }
@@ -434,6 +434,25 @@ export default class cardStatistics implements BlockTool {
   /**
    * HELPER METHODS
    */
+
+  /**
+   * Clean HTML content and return empty string for "empty" content
+   * 
+   * @param {string} content - HTML content to clean
+   * @returns {string} - Cleaned content or empty string
+   */
+  private getCleanContent(content: string): string {
+    if (!content) return '';
+    
+    // Remove common "empty" HTML patterns that browsers insert
+    const cleanedContent = content
+      .replace(/^<br\/?>$/i, '') // Single <br> or <br/>
+      .replace(/^<p><br\/?>?<\/p>$/i, '') // <p><br></p> or <p><br/></p>
+      .replace(/^<div><br\/?>?<\/div>$/i, '') // <div><br></div> or <div><br/></div>
+      .replace(/^\s*$/, ''); // Whitespace only
+    
+    return cleanedContent;
+  }
 
   /**
    * Update Align
