@@ -75,13 +75,11 @@ yarn add editorjs-card-statistics
 
 This tool uses [Vite](https://vitejs.dev/) as builder.
 
-**Setup**
+**Commands**
 
-```bash
-git clone <repository-url>
-cd editorjs-card-statistics
-npm install
-```
+`npm run dev` — run development environment with hot reload
+
+`npm run build` — build the tool for production to the `dist` folder
 
 ## Configuration Options
 
