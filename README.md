@@ -83,12 +83,6 @@ cd editorjs-card-statistics
 npm install
 ```
 
-**Commands**
-
-`npm run dev` — run development environment with hot reload
-
-`npm run build` — build the tool for production to the `dist` folder
-
 ## Configuration Options
 
 | Option                   | Type     | Default                  | Description                            |
