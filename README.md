@@ -14,6 +14,16 @@ Provides Card Statistics blocks for the [Editor.js](https://editorjs.io/).
 
 ![Alignment Options](./assets/images/block.png)
 
+## Installation
+
+Use your package manager to install the package `editorjs-card-statistics`.
+
+```bash
+npm install editorjs-card-statistics
+
+yarn add editorjs-card-statistics
+```
+
 ## Usage Example
 
 ### Basic Setup
@@ -59,16 +69,6 @@ const editor = new EditorJS({
     "align": "center"
   }
 }
-```
-
-## Installation
-
-Use your package manager to install the package `editorjs-card-statistics`.
-
-```bash
-npm install editorjs-card-statistics
-
-yarn add editorjs-card-statistics
 ```
 
 ## Development
