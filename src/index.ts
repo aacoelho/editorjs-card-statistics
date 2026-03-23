@@ -6,13 +6,13 @@ import './index.scss';
 /**
  * Import types
  */
-import { cardImageData, cardImageConfig } from './types';
+import { cardStatisticsData, cardStatisticsConfig } from './types';
 import { API, BlockAPI, BlockTool } from '@editorjs/editorjs';
 
 /**
- * card image Tool for Editor.js
+ * card-statistics Tool for Editor.js
  */
-export default class cardImage implements BlockTool {
+export default class cardStatistics implements BlockTool {
   /**
    * Code API — public methods to work with Editor
    * 
@@ -35,12 +35,12 @@ export default class cardImage implements BlockTool {
   /**
    * Tool data for input and output
    */
-  private _data!: cardImageData;
+  private _data!: cardStatisticsData;
 
   /**
    * Configuration object that passed through the initial Editor configuration.
    */
-  private config: cardImageConfig;
+  private config: cardStatisticsConfig;
 
   /**
    * Tool's HTML nodes
@@ -97,13 +97,13 @@ export default class cardImage implements BlockTool {
    * 
    * @link https://editorjs.io/tools-api#class-constructor
    */
-  constructor({ data, config, api, block, readOnly }: { data: cardImageData, config: cardImageConfig, api: API, block: BlockAPI, readOnly: boolean }) {
+  constructor({ data, config, api, block, readOnly }: { data: cardStatisticsData, config: cardStatisticsConfig, api: API, block: BlockAPI, readOnly: boolean }) {
     this.config = config;
     this.api = api;
     this.block = block;
     this.readOnly = readOnly;
 
-    this.valuePlaceholder = config.valuePlaceholder || 'Add image value';
+    this.valuePlaceholder = config.valuePlaceholder || 'Add statistics value';
     this.titlePlaceholder = config.titlePlaceholder || 'Add title';
     this.descriptionPlaceholder = config.descriptionPlaceholder || 'Add description';
 
@@ -128,32 +128,32 @@ export default class cardImage implements BlockTool {
    */
   get classes() {
     return {
-      wrapper: 'cdx-card-image',
-      value: 'cdx-card-image__value',
-      title: 'cdx-card-image__title',
-      description: 'cdx-card-image__description',
-      wrapperForAlignType: (alignType: string) => `cdx-card-image--${alignType}`,
+      wrapper: 'cdx-card-statistics',
+      value: 'cdx-card-statistics__value',
+      title: 'cdx-card-statistics__title',
+      description: 'cdx-card-statistics__description',
+      wrapperForAlignType: (alignType: string) => `cdx-card-statistics--${alignType}`,
     };
   }
 
   /**
    * Data setter
-   * @param {cardImageData} data - Raw data to store (Editor.js handles sanitization automatically)
+   * @param {cardStatisticsData} data - Raw data to store (Editor.js handles sanitization automatically)
    */
-  set data(data: cardImageData) {
+  set data(data: cardStatisticsData) {
     this._data = Object.assign({}, {
       value: data.value || "",
       title: data.title || "",
       description: data.description || "",
-      align: data.align || cardImage.DEFAULT_ALIGN_TYPE,
+      align: data.align || cardStatistics.DEFAULT_ALIGN_TYPE,
     });
   }
 
   /**
    * Data getter
-   * @returns {cardImageData} Current tool data
+   * @returns {cardStatisticsData} Current tool data
    */
-  get data(): cardImageData {
+  get data(): cardStatisticsData {
     return this._data;
   }
 
@@ -201,7 +201,7 @@ export default class cardImage implements BlockTool {
     this.nodes.wrapper.appendChild(this.nodes.description);
 
     // Apply alignment
-    this.updateAlign(this._data.align || cardImage.DEFAULT_ALIGN_TYPE);
+    this.updateAlign(this._data.align || cardStatistics.DEFAULT_ALIGN_TYPE);
 
     return this.nodes.wrapper;
   }
@@ -211,9 +211,9 @@ export default class cardImage implements BlockTool {
    * Required
    * @link https://editorjs.io/tools-api#save
    * 
-   * @returns {cardImageData} saved data
+   * @returns {cardStatisticsData} saved data
    */
-  save(): cardImageData {
+  save(): cardStatisticsData {
     return {
       value: this.getCleanContent(this.nodes.value?.innerHTML || ''),
       title: this.getCleanContent(this.nodes.title?.innerHTML || ''),
@@ -226,10 +226,10 @@ export default class cardImage implements BlockTool {
    * Validates Block data after saving
    * @link https://editorjs.io/tools-api#validate
    * 
-   * @param {cardImageData} savedData
+   * @param {cardStatisticsData} savedData
    * @returns {boolean} true if data is valid, otherwise false
    */ 
-  validate(savedData: cardImageData): boolean {
+  validate(savedData: cardStatisticsData): boolean {
     // Require at least a value or title to be present
     return !!(savedData.value?.trim() || savedData.title?.trim());
   }
@@ -278,8 +278,8 @@ export default class cardImage implements BlockTool {
    * Specifies how to merge two similar Blocks
    * @link https://editorjs.io/tools-api#merge
    * 
-   * @param {cardImageData} data - data of second Block
-   * @returns {cardImageData} - merged data
+   * @param {card-statisticsData} data - data of second Block
+   * @returns {card-statisticsData} - merged data
    */
   // merge() {} 
 
@@ -340,7 +340,7 @@ export default class cardImage implements BlockTool {
    */
   static get toolbox() {
     return {
-      title: 'Image card',
+      title: 'Statistics card',
       icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208ZM140,80v96a8,8,0,0,1-16,0V95l-11.56,7.71a8,8,0,1,1-8.88-13.32l24-16A8,8,0,0,1,140,80Z"></path></svg>',
     };
   }

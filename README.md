@@ -1,13 +1,13 @@
-# Card Image Tool for Editor.js
+# Card Statistics Tool for Editor.js
 
-Provides Card Image blocks for the [Editor.js](https://editorjs.io/).
+Provides Card Statistics blocks for the [Editor.js](https://editorjs.io/).
 
-![Card Image Demo](./assets/images/toolbox.png)
+![Card Statistics Demo](./assets/images/toolbox.png)
 
 ## Features
 
-- **Value Field**: Add numbers, percentages, or any metric
-- **Title Field**: Descriptive labels for your card image
+- **Value Field**: Add statistical numbers, percentages, or any metric
+- **Title Field**: Descriptive labels for your statistics
 - **Description Field**: Additional context or details
 - **Content Alignment**: Left, center, or right alignment options
 - **HTML Support**: All fields support rich text formatting
@@ -16,12 +16,12 @@ Provides Card Image blocks for the [Editor.js](https://editorjs.io/).
 
 ## Installation
 
-Use your package manager to install the package `editorjs-card-image`.
+Use your package manager to install the package `editorjs-card-statistics`.
 
 ```bash
-npm install editorjs-card-image
+npm install editorjs-card-statistics
 
-yarn add editorjs-card-image
+yarn add editorjs-card-statistics
 ```
 
 ## Usage Example
@@ -30,11 +30,11 @@ yarn add editorjs-card-image
 
 ```javascript
 import EditorJS from "@editorjs/editorjs"
-import CardImage from "editorjs-card-image"
+import CardStatistics from "editorjs-card-statistics"
 
 const editor = new EditorJS({
   tools: {
-    cardImage: CardImage,
+    cardStatistics: CardStatistics,
   },
 })
 ```
@@ -44,11 +44,11 @@ const editor = new EditorJS({
 ```javascript
 const editor = new EditorJS({
   tools: {
-    cardImage: {
-      class: CardImage,
+    cardStatistics: {
+      class: CardStatistics,
       inlineToolbar: ["bold", "italic"],
       config: {
-        valuePlaceholder: "Enter image value",
+        valuePlaceholder: "Enter statistic value",
         titlePlaceholder: "Add a title",
         descriptionPlaceholder: "Add description",
       },
@@ -61,7 +61,7 @@ const editor = new EditorJS({
 
 ```json
 {
-  "type": "cardImage",
+  "type": "cardStatistics",
   "data": {
     "value": "94%",
     "title": "Customer Satisfaction",
@@ -85,7 +85,7 @@ This tool uses [Vite](https://vitejs.dev/) as builder.
 
 | Option                   | Type     | Default                  | Description                            |
 | ------------------------ | -------- | ------------------------ | -------------------------------------- |
-| `valuePlaceholder`       | `string` | `'Add image value'` | Placeholder text for value field       |
+| `valuePlaceholder`       | `string` | `'Add statistics value'` | Placeholder text for value field       |
 | `titlePlaceholder`       | `string` | `'Add title'`            | Placeholder text for title field       |
 | `descriptionPlaceholder` | `string` | `'Add description'`      | Placeholder text for description field |
 

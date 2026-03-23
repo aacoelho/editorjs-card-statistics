@@ -1,9 +1,9 @@
 import { BlockToolData } from '@editorjs/editorjs';
 
 /**
- * cardImage Tool's input and output data format
+ * cardStatistics Tool's input and output data format
  */
-export interface cardImageData extends BlockToolData {
+export interface cardStatisticsData extends BlockToolData {
   value?: string;
   title?: string;
   description?: string;
@@ -11,9 +11,9 @@ export interface cardImageData extends BlockToolData {
 }
 
 /**
- * cardImage Tool's configuration object that passed through the initial Editor config
+ * cardStatistics Tool's configuration object that passed through the initial Editor config
  */
-export interface cardImageConfig {
+export interface cardStatisticsConfig {
   valuePlaceholder?: string;
   titlePlaceholder?: string;
   descriptionPlaceholder?: string;
