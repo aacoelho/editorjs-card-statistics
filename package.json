@@ -1,9 +1,9 @@
 {
-  "name": "editorjs-card-statistics",
-  "description": "Card Statistics Tool for Editor.js",
+  "name": "editorjs-card-image",
+  "description": "Card Image Tool for Editor.js",
   "version": "1.0.1",
-  "main": "dist/card-statistics.umd.js",
-  "module": "dist/card-statistics.mjs",
+  "main": "dist/card-image.umd.js",
+  "module": "dist/card-image.mjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build"

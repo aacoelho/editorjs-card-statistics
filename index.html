@@ -16,12 +16,12 @@
 
   <script type="module">
     import EditorJS from '@editorjs/editorjs';
-    import cardStatistics from './src/index.ts';
+    import cardImage from './src/index.ts';
 
     const editor = new EditorJS({
       tools: {
-        cardStatistics: {
-          class: cardStatistics,
+        cardImage: {
+          class: cardImage,
           inlineToolbar: ['bold','italic'],
           // shortcut: 'CMD+SHIFT+H',
           // config: {},
@@ -31,7 +31,7 @@
       data: {
         blocks: [
           {
-            type: 'cardStatistics',
+            type: 'cardImage',
             data: {
                 value: "<b>100%</b>",
                 title: "Probability of being right",

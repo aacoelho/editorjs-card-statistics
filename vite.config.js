@@ -11,9 +11,9 @@ export default {
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src', 'index.ts'),
-      name: 'card-statistics',
+      name: 'card-image',
       formats: ['umd', 'es'],
-      fileName: 'card-statistics'
+      fileName: 'card-image'
     },
   },
 
